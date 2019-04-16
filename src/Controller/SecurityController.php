@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SecurityController extends AbstractController
+final class SecurityController extends AbstractController
 {
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

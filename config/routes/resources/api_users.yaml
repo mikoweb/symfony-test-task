@@ -1,0 +1,24 @@
+index:
+    path: /
+    controller: App\Controller\ApiUsersController::index
+    methods: [GET]
+
+read:
+    path: /{id}
+    controller: App\Controller\ApiUsersController::read
+    methods: [GET]
+
+create:
+    path: /
+    controller: App\Controller\ApiUsersController::create
+    methods: [POST]
+
+update:
+    path: /{id}
+    controller: App\Controller\ApiUsersController::update
+    methods: [PUT]
+
+delete:
+    path: /{id}
+    controller: App\Controller\ApiUsersController::delete
+    methods: [DELETE]

@@ -36,7 +36,7 @@ final class User implements UserInterface
     /**
      * @var string|null
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration", "api_create"})
      * @Assert\Length(min="6")
      */
     private $plainPassword;
@@ -46,7 +46,7 @@ final class User implements UserInterface
      *
      * @ORM\Column(name="username", type="string")
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(groups={"registration", "api_create"})
      */
     private $username;
 
@@ -62,7 +62,7 @@ final class User implements UserInterface
 
     public function getRoles(): array
     {
-        return array_merge($this->roles, ['ROLE_USER']);
+        return array_unique(array_merge($this->roles, ['ROLE_USER']));
     }
 
     public function setRoles(array $roles): void
@@ -90,7 +90,7 @@ final class User implements UserInterface
         return $this->username;
     }
 
-    public function setUsername(string $username): void
+    public function setUsername(?string $username): void
     {
         $this->username = $username;
     }
