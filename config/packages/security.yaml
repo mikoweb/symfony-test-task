@@ -3,7 +3,9 @@ security:
         App\Entity\User: bcrypt
 
     providers:
-        users:
+        api_key:
+            id: App\Security\ApiKeyProvider
+        database:
             entity:
                 class: App\Entity\User
 
@@ -12,12 +14,17 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         api:
-            pattern: ^/api/*
-            security: false
+            pattern: ^/api/
+            stateless: true
+            provider: api_key
+            guard:
+                authenticators:
+                    - App\Security\ApiKeyAuthenticator
         main:
             switch_user: true
             pattern: ^/
             anonymous: true
+            provider: database
             guard:
                 authenticators:
                     - App\Security\Authenticator
@@ -39,4 +46,5 @@ security:
     access_control:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/, roles: ROLE_API_USER }
         - { path: ^/, roles: ROLE_USER }

@@ -25,4 +25,11 @@ class UserRepository extends ServiceEntityRepository
             'username' => $userName,
         ]);
     }
+
+    public function findApiKeyUser(string $apiKey): ?User
+    {
+        return $this->findOneBy([
+            'apiKey' => $apiKey,
+        ]);
+    }
 }

@@ -3,12 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="users")
+ *
+ * @UniqueEntity(fields={"username"}, errorPath="username")
+ * @UniqueEntity(fields={"apiKey"}, errorPath="apiKey")
  */
 final class User implements UserInterface
 {
@@ -27,9 +31,9 @@ final class User implements UserInterface
     private $roles;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="password", type="string")
+     * @ORM\Column(name="password", type="string", nullable=true)
      */
     private $password;
 
@@ -44,11 +48,18 @@ final class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string")
+     * @ORM\Column(name="username", type="string", unique=true)
      *
      * @Assert\NotBlank(groups={"registration", "api_create"})
      */
     private $username;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="api_key", type="string", nullable=true, unique=true)
+     */
+    private $apiKey;
 
     public function __construct()
     {
@@ -70,12 +81,12 @@ final class User implements UserInterface
         $this->roles = $roles;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
     }
@@ -111,5 +122,15 @@ final class User implements UserInterface
     public function eraseCredentials()
     {
         $this->plainPassword = null;
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    public function setApiKey(?string $apiKey): void
+    {
+        $this->apiKey = $apiKey;
     }
 }
