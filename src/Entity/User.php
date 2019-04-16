@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -34,20 +35,18 @@ final class User implements UserInterface
 
     /**
      * @var string|null
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(min="6")
      */
     private $plainPassword;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="salt", type="string")
-     */
-    private $salt;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="username", type="string")
+     *
+     * @Assert\NotBlank()
      */
     private $username;
 
@@ -63,7 +62,7 @@ final class User implements UserInterface
 
     public function getRoles(): array
     {
-        return $this->roles;
+        return array_merge($this->roles, ['ROLE_USER']);
     }
 
     public function setRoles(array $roles): void
@@ -81,17 +80,12 @@ final class User implements UserInterface
         $this->password = $password;
     }
 
-    public function getSalt(): string
+    public function getSalt(): ?string
     {
-        return $this->salt;
+        return null;
     }
 
-    public function setSalt(string $salt): void
-    {
-        $this->salt = $salt;
-    }
-
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
