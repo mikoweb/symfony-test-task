@@ -5,29 +5,29 @@
 {% block body %}
     <form method="post">
         <h1 class="h3 mb-3 font-weight-normal">
-            Please sign in
+            {{ 'login_form.title'|trans }}
         </h1>
         <label for="inputUsername" class="sr-only">
-            Username
+            {{ 'login_form.username'|trans }}
         </label>
         <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control"
                placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">
-            Password
+            {{ 'login_form.password'|trans }}
         </label>
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" name="_remember_me">
-                Remember me
+                {{ 'login_form.remember_me'|trans }}
             </label>
         </div>
         <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
+            {{ 'login_form.sign_in'|trans }}
         </button>
     </form>
     <a href="{{ path('app_register') }}">
-        Registration
+        {{ 'login_form.registration'|trans }}
     </a>
 {% endblock %}

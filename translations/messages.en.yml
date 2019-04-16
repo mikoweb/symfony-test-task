@@ -1,0 +1,15 @@
+login_form:
+    user_not_found: Username could not be found.
+    title: Please sign in
+    username: Username
+    password: Password
+    remember_me: Remember me
+    sign_in: Sign in
+    registration: Registration
+
+registration_form:
+    complete_message: Registration complete. Now you can log in.
+    username: Username
+    password: Password
+    repeat_password: Repeat Password
+    submit_button: Register

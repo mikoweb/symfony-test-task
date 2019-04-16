@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -23,7 +24,11 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        TranslatorInterface $translator
+    ): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user, [
@@ -41,7 +46,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Registration complete. Now you can log in.');
+            $this->addFlash('success', $translator->trans('registration_form.complete_message'));
 
             return $this->redirectToRoute('app_login');
         }
